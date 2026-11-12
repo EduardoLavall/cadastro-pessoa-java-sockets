@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ServidorPessoa" default="jar" basedir=".">
+    <property name="main.class" value="servidor.Servidor"/>
+    <path id="bibliotecas"><fileset dir="lib" includes="*.jar"/></path>
+    <target name="clean"><delete dir="build"/><delete dir="dist"/></target>
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src" destdir="build/classes" source="8" target="8"
+               encoding="UTF-8" includeantruntime="false">
+            <classpath refid="bibliotecas"/>
+        </javac>
+    </target>
+    <target name="jar" depends="compile">
+        <mkdir dir="dist"/>
+        <jar destfile="dist/ServidorPessoa.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="servidor.Servidor"/>
+                <attribute name="Class-Path" value="../lib/mysql-connector-j-8.1.0.jar"/>
+            </manifest>
+        </jar>
+    </target>
+    <target name="run" depends="compile">
+        <java classname="servidor.Servidor" fork="true" failonerror="true">
+            <classpath><pathelement location="build/classes"/><path refid="bibliotecas"/></classpath>
+        </java>
+    </target>
+</project>
